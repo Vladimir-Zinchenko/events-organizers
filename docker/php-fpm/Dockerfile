@@ -3,6 +3,7 @@ WORKDIR "/app"
 
 RUN apt-get update; \
     apt-get -y --no-install-recommends install \
+      mc \
       php8.2-intl \
       php8.2-mysql \
     apt-get clean; \
