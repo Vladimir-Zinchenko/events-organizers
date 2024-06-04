@@ -2,8 +2,8 @@
 
 namespace app\controllers\admin;
 
-use app\models\Event;
-use app\services\EventService;
+use app\models\Organizer;
+use app\services\OrganizerService;
 use Exception;
 use Throwable;
 use yii\base\Module;
@@ -13,20 +13,20 @@ use yii\filters\VerbFilter;
 use yii\web\Response;
 
 /**
- * Class EventController
+ * Class OrganizerController
  */
-class EventController extends Controller
+class OrganizerController extends Controller
 {
-    private readonly EventService $eventService;
+    private readonly OrganizerService $organizerService;
 
     /**
      * @param string       $id
      * @param Module       $module
      * @param array|null   $config
-     * @param EventService $eventService
+     * @param OrganizerService $organizerService
      */
-    public function __construct(string $id, Module $module, ?array $config, EventService $eventService) {
-        $this->eventService = $eventService;
+    public function __construct(string $id, Module $module, ?array $config, OrganizerService $organizerService) {
+        $this->organizerService = $organizerService;
 
         parent::__construct($id, $module, $config ?? []);
     }
@@ -55,7 +55,7 @@ class EventController extends Controller
     public function actionIndex(): string
     {
         return $this->render('index', [
-            'dataProvider' => $this->eventService->list(),
+            'dataProvider' => $this->organizerService->list(),
         ]);
     }
 
@@ -69,7 +69,7 @@ class EventController extends Controller
     public function actionView(int $id): string
     {
         return $this->render('view', [
-            'model' => $this->eventService->findOrFail($id),
+            'model' => $this->organizerService->findOrFail($id),
         ]);
     }
 
@@ -80,9 +80,9 @@ class EventController extends Controller
      */
     public function actionCreate(): Response|string
     {
-        $model = new Event();
+        $model = new Organizer();
 
-        if ($this->request->isPost && $this->eventService->saveOrUpdate($model, $this->request->post())) {
+        if ($this->request->isPost && $this->organizerService->saveOrUpdate($model, $this->request->post())) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             $model->loadDefaultValues();
@@ -102,9 +102,9 @@ class EventController extends Controller
      */
     public function actionUpdate(int $id): Response|string
     {
-        $model = $this->eventService->findOrFail($id);
+        $model = $this->organizerService->findOrFail($id);
 
-        if ($this->request->isPost && $this->eventService->saveOrUpdate($model, $this->request->post())) {
+        if ($this->request->isPost && $this->organizerService->saveOrUpdate($model, $this->request->post())) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -122,7 +122,7 @@ class EventController extends Controller
      */
     public function actionDelete(int $id): Response
     {
-        $this->eventService->deleteById($id);
+        $this->organizerService->deleteById($id);
 
         return $this->redirect(['index']);
     }
