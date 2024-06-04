@@ -31,3 +31,8 @@ services:
             - './app:/app'
         depends_on:
             - db
+        environment:
+            - MYSQL_HOST=db
+            - MYSQL_DATABASE=${MYSQL_DB_NAME}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
