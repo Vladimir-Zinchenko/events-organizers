@@ -3,6 +3,7 @@
 namespace app\services;
 
 use app\models\Event;
+use DateTime;
 use Exception;
 use Throwable;
 use yii\data\ActiveDataProvider;
@@ -52,16 +53,24 @@ class EventService
     }
 
     /**
-     * @param Event $event
-     * @param array $data
+     * @param Event      $event
+     * @param array|null $data
      *
      * @return bool
      *
-     * @throws Exception
+     * @throws \yii\db\Exception
      */
-    public function saveOrUpdate(Event $event, array $data): bool
+    public function save(Event $event, ?array $data = []): bool
     {
-        return $event->load($data) && $event->save();
+        if (isset($data['date'])) {
+            $data['date'] = (new DateTime($data['date']))->format('Y-m-d');
+        }
+
+        if ($data) {
+            $event->setAttributes($data);
+        }
+
+        return $event->save();
     }
 
     /**

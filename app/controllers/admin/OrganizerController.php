@@ -81,8 +81,9 @@ class OrganizerController extends Controller
     public function actionCreate(): Response|string
     {
         $model = new Organizer();
+        $data = $this->request->post()['Organizer'] ?? [];
 
-        if ($this->request->isPost && $this->organizerService->saveOrUpdate($model, $this->request->post())) {
+        if ($this->request->isPost && $this->organizerService->save($model, $data)) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             $model->loadDefaultValues();
@@ -103,8 +104,9 @@ class OrganizerController extends Controller
     public function actionUpdate(int $id): Response|string
     {
         $model = $this->organizerService->findOrFail($id);
+        $data = $this->request->post()['Organizer'] ?? [];
 
-        if ($this->request->isPost && $this->organizerService->saveOrUpdate($model, $this->request->post())) {
+        if ($this->request->isPost && $this->organizerService->save($model, $data)) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

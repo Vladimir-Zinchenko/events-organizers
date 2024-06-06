@@ -81,8 +81,9 @@ class EventController extends Controller
     public function actionCreate(): Response|string
     {
         $model = new Event();
+        $data = $this->request->post()['Event'] ?? [];
 
-        if ($this->request->isPost && $this->eventService->saveOrUpdate($model, $this->request->post())) {
+        if ($this->request->isPost && $this->eventService->save($model, $data)) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             $model->loadDefaultValues();
@@ -103,8 +104,9 @@ class EventController extends Controller
     public function actionUpdate(int $id): Response|string
     {
         $model = $this->eventService->findOrFail($id);
+        $data = $this->request->post()['Event'] ?? [];
 
-        if ($this->request->isPost && $this->eventService->saveOrUpdate($model, $this->request->post())) {
+        if ($this->request->isPost && $this->eventService->save($model, $data)) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

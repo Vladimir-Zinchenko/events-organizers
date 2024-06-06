@@ -42,26 +42,30 @@ class OrganizerService
      */
     public function findOrFail(int $id): Organizer
     {
-        $Organizer = $this->findById($id);
+        $organizer = $this->findById($id);
 
-        if ($Organizer === null) {
+        if ($organizer === null) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
-        return $Organizer;
+        return $organizer;
     }
 
     /**
-     * @param Organizer $Organizer
-     * @param array $data
+     * @param Organizer  $organizer
+     * @param array|null $data
      *
      * @return bool
      *
-     * @throws Exception
+     * @throws \yii\db\Exception
      */
-    public function saveOrUpdate(Organizer $Organizer, array $data): bool
+    public function save(Organizer $organizer, ?array $data = []): bool
     {
-        return $Organizer->load($data) && $Organizer->save();
+        if ($data) {
+            $organizer->setAttributes($data);
+        }
+
+        return $organizer->save();
     }
 
     /**
@@ -73,8 +77,8 @@ class OrganizerService
      */
     public function deleteById(int $id): false|int
     {
-        $Organizer = $this->findOrFail($id);
+        $organizer = $this->findOrFail($id);
 
-        return $Organizer->delete();
+        return $organizer->delete();
     }
 }
