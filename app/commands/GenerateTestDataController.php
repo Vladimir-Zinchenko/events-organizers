@@ -130,7 +130,7 @@ class GenerateTestDataController extends Controller
             shuffle($this->organizers);
 
             $count = rand(1, 5);
-            $organizers = array_slice($this->organizers, $count);
+            $organizers = array_slice($this->organizers, 0, $count);
             $event->setOrganizers($organizers);
 
             $this->eventService->save($event);
