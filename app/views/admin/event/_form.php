@@ -1,5 +1,8 @@
 <?php
 
+use app\models\Organizer;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
@@ -18,6 +21,14 @@ use yii\jui\DatePicker;
     <?= $form->field($model, 'date')->widget(DatePicker::class) ?>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'organizer_ids')->widget(Select2::class, [
+        'data' => ArrayHelper::map(Organizer::find()->all(), 'id', 'name'),
+        'options' => [
+            'placeholder' => 'Select organizers ...',
+            'multiple' => true
+        ],
+    ]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

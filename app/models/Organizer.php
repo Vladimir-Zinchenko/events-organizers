@@ -68,6 +68,8 @@ class Organizer extends ActiveRecord
             'name' => 'Name',
             'email' => 'Email',
             'phone' => 'Phone',
+            'events' => 'Events',
+            'event_ids' => 'Events',
         ];
     }
 

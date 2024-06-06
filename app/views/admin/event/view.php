@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Organizer;
 use yii\helpers\Html;
 use yii\web\YiiAsset;
 use yii\widgets\DetailView;
@@ -32,8 +33,15 @@ YiiAsset::register($this);
         'attributes' => [
             'id',
             'title',
-            'date',
+            'date:date',
             'description:ntext',
+            [
+                'label' => 'Owner',
+                'format' => 'html',
+                'value' => implode(', ', array_map(function (Organizer $organizer) {
+                    return Html::a($organizer->name, ['admin/organizer/view', 'id' => $organizer->id]);
+                }, $model->organizers)),
+            ],
         ],
     ]) ?>
 

@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Event;
 use yii\helpers\Html;
 use yii\web\YiiAsset;
 use yii\widgets\DetailView;
@@ -34,6 +35,13 @@ YiiAsset::register($this);
             'name',
             'email',
             'phone',
+            [
+                'label' => 'Events',
+                'format' => 'html',
+                'value' => implode(', ', array_map(function (Event $event) {
+                    return Html::a($event->title, ['admin/event/view', 'id' => $event->id]);
+                }, $model->events)),
+            ],
         ],
     ]) ?>
 

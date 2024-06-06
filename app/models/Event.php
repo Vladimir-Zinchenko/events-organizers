@@ -69,6 +69,8 @@ class Event extends ActiveRecord
             'title' => 'Title',
             'date' => 'Date',
             'description' => 'Description',
+            'organizers' => 'Organizers',
+            'organizer_ids' => 'Organizers',
         ];
     }
 
